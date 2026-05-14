@@ -76,7 +76,7 @@ async function classifyWithOpenAI(userText: string, imageBase64?: string): Promi
 
 async function classifyWithGemini(userText: string, imageBase64?: string): Promise<string> {
   const genAI = new GoogleGenerativeAI(Deno.env.get("GEMINI_API_KEY") ?? "");
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
   type Part = { text: string } | { inlineData: { mimeType: string; data: string } };
   const parts: Part[] = [];
