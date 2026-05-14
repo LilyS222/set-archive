@@ -23,5 +23,8 @@ SetArchive.xcodeproj/
 # Supabase 로컬 (클라우드 쓰니까 불필요)
 supabase/.temp/
 
+# 기획/학습 문서 (로컬에서만 관리)
+docs/
+
 # macOS
 .DS_Store
