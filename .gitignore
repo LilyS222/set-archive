@@ -1,0 +1,27 @@
+# Xcode
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+DerivedData/
+*.ipa
+*.dSYM.zip
+*.dSYM
+build/
+
+# xcodegen 생성 파일 (project.yml로 재생성 가능)
+SetArchive.xcodeproj/
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# 환경변수 (절대 커밋하지 마세요)
+.env
+.env.local
+.env.*.local
+
+# Supabase 로컬 (클라우드 쓰니까 불필요)
+supabase/.temp/
+
+# macOS
+.DS_Store

@@ -1,0 +1,82 @@
+name: SetArchive
+options:
+  bundleIdPrefix: com.setarchive
+  deploymentTarget:
+    iOS: "17.0"
+  defaultConfig: Debug
+
+packages:
+  Supabase:
+    url: https://github.com/supabase/supabase-swift
+    from: "2.5.1"
+
+settings:
+  base:
+    SWIFT_VERSION: 5.9
+    MARKETING_VERSION: 1.0.0
+    CURRENT_PROJECT_VERSION: 1
+    DEVELOPMENT_TEAM: ""
+    DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
+
+configs:
+  Debug: debug
+  Release: release
+
+targets:
+  SetArchive:
+    type: application
+    platform: iOS
+    sources:
+      - path: SetArchive
+        excludes:
+          - "**/.DS_Store"
+    resources:
+      - SetArchive/Resources
+    entitlements: SetArchive/SetArchive.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.setarchive.app
+        INFOPLIST_FILE: SetArchive/Info.plist
+        CODE_SIGN_STYLE: Automatic
+    info:
+      path: SetArchive/Info.plist
+      properties:
+        CFBundleDisplayName: 셋아카이브
+        CFBundleName: SetArchive
+        UILaunchScreen:
+          UIColorName: ""
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        BGTaskSchedulerPermittedIdentifiers:
+          - com.setarchive.app.process-queue
+    dependencies:
+      - package: Supabase
+
+  ShareExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: ShareExtension
+      - path: SetArchive/Shared
+    entitlements: ShareExtension/ShareExtension.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.setarchive.app.ShareExtension
+        INFOPLIST_FILE: ShareExtension/Info.plist
+        CODE_SIGN_STYLE: Automatic
+    info:
+      path: ShareExtension/Info.plist
+      properties:
+        CFBundleDisplayName: 셋아카이브
+        NSExtension:
+          NSExtensionAttributes:
+            NSExtensionActivationRule:
+              NSExtensionActivationSupportsWebURLWithMaxCount: 1
+              NSExtensionActivationSupportsImageWithMaxCount: 1
+              NSExtensionActivationSupportsText: true
+          NSExtensionPointIdentifier: com.apple.share-services
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ShareViewController
