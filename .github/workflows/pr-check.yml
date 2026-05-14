@@ -1,0 +1,28 @@
+name: PR Check
+
+# PR을 main에 올릴 때 타입 오류 검사
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'supabase/functions/**'
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 코드 체크아웃
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Deno 설치 (Edge Function 런타임)
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      # 3. TypeScript 타입 체크
+      - name: Type check
+        run: deno check supabase/functions/classify/index.ts
