@@ -2,7 +2,7 @@ import OpenAI from "npm:openai@4.56.0";
 import { GoogleGenerativeAI } from "npm:@google/generative-ai@0.21.0";
 
 // AI_PROVIDER = "openai" | "gemini"  (default: "openai")
-const PROVIDER = Deno.env.get("AI_PROVIDER") ?? "openai";
+const PROVIDER = Deno.env.get("AI_PROVIDER") ?? "gemini";
 
 const SYSTEM_PROMPT = `당신은 수집된 콘텐츠를 정확하게 분류하는 AI입니다.
 
