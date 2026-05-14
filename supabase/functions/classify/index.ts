@@ -1,5 +1,5 @@
 import OpenAI from "npm:openai@4.56.0";
-import { GoogleGenerativeAI } from "npm:@google/generative-ai@0.21.0";
+import { GoogleGenAI } from "npm:@google/genai@1.3.0";
 
 // AI_PROVIDER = "openai" | "gemini"  (default: "openai")
 const PROVIDER = Deno.env.get("AI_PROVIDER") ?? "gemini";
@@ -75,8 +75,7 @@ async function classifyWithOpenAI(userText: string, imageBase64?: string): Promi
 }
 
 async function classifyWithGemini(userText: string, imageBase64?: string): Promise<string> {
-  const genAI = new GoogleGenerativeAI(Deno.env.get("GEMINI_API_KEY") ?? "");
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+  const ai = new GoogleGenAI({ apiKey: Deno.env.get("GEMINI_API_KEY") ?? "" });
 
   type Part = { text: string } | { inlineData: { mimeType: string; data: string } };
   const parts: Part[] = [];
@@ -85,8 +84,12 @@ async function classifyWithGemini(userText: string, imageBase64?: string): Promi
   }
   parts.push({ text: SYSTEM_PROMPT + "\n\n" + userText });
 
-  const res = await model.generateContent(parts);
-  return res.response.text();
+  const res = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: [{ role: "user", parts }],
+    config: { responseMimeType: "application/json" },
+  });
+  return res.text ?? "";
 }
 
 // ── Main handler ──────────────────────────────────────────────────
