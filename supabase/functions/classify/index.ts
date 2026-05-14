@@ -85,7 +85,7 @@ async function classifyWithGemini(userText: string, imageBase64?: string): Promi
   parts.push({ text: SYSTEM_PROMPT + "\n\n" + userText });
 
   const res = await ai.models.generateContent({
-    model: "gemini-2.0-flash",
+    model: "gemini-2.0-flash-lite",
     contents: [{ role: "user", parts }],
     config: { responseMimeType: "application/json" },
   });
